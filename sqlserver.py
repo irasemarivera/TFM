@@ -28,7 +28,7 @@ conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=tfmcice.database.windows.net;'
                       'Database=StocksDB;'
                       'UID=tfmcice;'
-                      'PWD=Q1w2e3r4t5!;'
+                      'PWD=xxxxxxx;'
                       'Trusted_Connections=no;')
 
 cursor = conn.cursor()
