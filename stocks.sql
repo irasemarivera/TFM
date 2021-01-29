@@ -27,3 +27,7 @@ create table stocks_history(
 	adj_close numeric not null,
 	primary key (stock, stock_date)
 )
+
+select * from stocks
+
+SELECT @@SERVERNAME
