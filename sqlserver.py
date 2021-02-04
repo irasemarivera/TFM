@@ -16,6 +16,7 @@ import pyodbc
 from datetime import datetime
 import datetime
 from datetime import timedelta
+from datetime import time
 import pandas as pd
 import pandas_datareader.data as web
 
@@ -27,8 +28,8 @@ PARTE 1. Conectar a BD SQL SERVER y extraer de la tabla stocks los tickets de la
 conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=tfmcice.database.windows.net;'
                       'Database=StocksDB;'
-                      'UID=tfmcice;'
-                      'PWD=xxxxxxx;'
+                      'UID=xxxxxxxx;'
+                      'PWD=xxxxxxxxx;'
                       'Trusted_Connections=no;')
 
 cursor = conn.cursor()
@@ -47,7 +48,7 @@ while row:
 print("Total de acciones a recuperar:", len(stocks))
 
 '''
-PARTE 2. Conectar a API de yfinance
+PARTE 2. Conectar a API de yfinance y guardar en BD
 '''
 
 ONE_DAY = 1
@@ -56,7 +57,9 @@ DEFAULT_START_DATE = datetime.datetime(2016, 1, 1)
 
 for i in range(len(stocks)):
     # Definir una fecha inicio y fecha fin para cada stock
-    end_date = datetime.datetime.now()
+    # La fecha fin en principio debe ser la fecha de hoy a las 00:00hrs
+    today = datetime.date.today()
+    end_date = datetime.datetime(today.year, today.month, today.day)
     # El inicio será el valor máximo en BD + 1 día, o en su defecto, 01-ene-2021
     start_date = stocks[i].get("max_date")
     if start_date == None: 
@@ -64,8 +67,8 @@ for i in range(len(stocks)):
     else:
         start_date += timedelta(days = ONE_DAY)
     
-    # Si esta condición ocurre es que tenemos el precio de la acción al día y no debemos actualizar
-    if start_date > end_date:
+    # Si esta condición ocurre significa que tenemos el precio de la acción al día y no debemos actualizar
+    if start_date >= end_date:
         print("'{}' ya está actualizado".format(stocks[i].get("stock")))
     else:
         print("Obteniendo precios para '{}' en el periodo {} - {}".format(stocks[i].get("stock"), start_date, end_date))

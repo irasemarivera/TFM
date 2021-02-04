@@ -24,10 +24,13 @@ create table stocks_history(
 	low_value numeric not null,
 	open_value numeric not null,
 	close_value numeric not null,
+	volume numeric not null,
 	adj_close numeric not null,
 	primary key (stock, stock_date)
 )
 
-select * from stocks
+select s.stock, max(sh.stock_date) 
+from stocks s left join stocks_history sh on s.stock = sh.stock
+group by s.stock
 
-SELECT @@SERVERNAME
+select count(*) from stocks_history
