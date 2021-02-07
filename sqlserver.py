@@ -28,8 +28,8 @@ PARTE 1. Conectar a BD SQL SERVER y extraer de la tabla stocks los tickets de la
 conn = pyodbc.connect('Driver={SQL Server};'
                       'Server=tfmcice.database.windows.net;'
                       'Database=StocksDB;'
-                      'UID=xxxxxxxx;'
-                      'PWD=xxxxxxxxx;'
+                      'UID=tfmcice;'
+                      'PWD=Q1w2e3r4t5!;'
                       'Trusted_Connections=no;')
 
 cursor = conn.cursor()
@@ -60,7 +60,7 @@ for i in range(len(stocks)):
     # La fecha fin en principio debe ser la fecha de hoy a las 00:00hrs
     today = datetime.date.today()
     end_date = datetime.datetime(today.year, today.month, today.day)
-    # El inicio será el valor máximo en BD + 1 día, o en su defecto, 01-ene-2021
+    # El inicio será el valor máximo en BD + 1 día, o en su defecto, 01-ene-2016
     start_date = stocks[i].get("max_date")
     if start_date == None: 
         start_date = DEFAULT_START_DATE
