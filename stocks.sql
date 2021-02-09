@@ -34,3 +34,28 @@ from stocks s left join stocks_history sh on s.stock = sh.stock
 group by s.stock
 
 select count(*) from stocks_history
+
+create table news_sources(
+	source_id int not null identity primary key,
+	source_name varchar(100)
+)
+
+insert into news_sources(source_name) values ('Financial Times');
+insert into news_sources(source_name) values ('The Wall Street Journal');
+insert into news_sources(source_name) values ('International Business Times');
+insert into news_sources(source_name) values ('Reuters');
+insert into news_sources(source_name) values ('Business Insider');
+insert into news_sources(source_name) values ('The economist');
+insert into news_sources(source_name) values ('Bloomberg');
+insert into news_sources(source_name) values ('Businessweek');
+insert into news_sources(source_name) values ('Forbes');
+insert into news_sources(source_name) values ('Fortune');
+insert into news_sources(source_name) values ('CNN');
+insert into news_sources(source_name) values ('Money CNN');
+insert into news_sources(source_name) values ('Yahoo Finance');
+insert into news_sources(source_name) values ('Euromoney');
+insert into news_sources(source_name) values ('BBC');
+insert into news_sources(source_name) values ('The New York Times');
+insert into news_sources(source_name) values ('The Washington Post');
+
+select * from news_sources
