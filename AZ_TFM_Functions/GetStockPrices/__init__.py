@@ -66,7 +66,7 @@ def main(mytimer: func.TimerRequest) -> None:
         
         # Si esta condición ocurre significa que tenemos el precio de la acción al día y no debemos actualizar
         if start_date >= end_date:
-            logging.info("'{}' ya está actualizado".format(stocks[i].get("stock")))
+            logging.info("'{}' ya se encuentra actualizado hasta el {}".format(stocks[i].get("stock"), stocks[i].get("max_date")))
         else:
             logging.info("Obteniendo precios para '{}' en el periodo {} - {}".format(stocks[i].get("stock"), start_date, end_date))
             df_history = web.DataReader(stocks[i].get("stock"), YAHOO, start_date, end_date)
@@ -80,6 +80,7 @@ def main(mytimer: func.TimerRequest) -> None:
                 #En fin de semana llega el registro del viernes, aunque se consulte de sabado a domingo
                 #por lo que si el registro que llega es el mismo que el maximo en BD no se inserta
                 if max_date != row.Date:
+                    logging.info("'{}' fila insertada para fecha: {}".format(stocks[i].get("stock"), row.Date))
                     cursor.execute("insert into stocks_history (stock, stock_date, high_value, low_value, open_value, close_value, volume, adj_close) values(?,?,?,?,?,?,?,?)",
                             stocks[i].get("stock"), row.Date, row.High, row.Low, row.Open, row.Close, row.Volume, row.AdjClose)
                 else:
